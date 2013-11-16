@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+node.default['nginx']['default_site_enabled'] = false
+
 include_recipe 'nginx'
 
 directory node['vagrant_repo']['apt']['root_dir'] do
@@ -27,3 +29,13 @@ directory node['vagrant_repo']['apt']['root_dir'] do
   mode 00755
   recursive true
 end
+
+template File.join(node['nginx']['dir'], 'sites-available', 'vagrant-apt') do
+  source 'apt.nginx.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+  notifies :reload, 'service[nginx]'
+end
+
+nginx_site 'vagrant-apt'
