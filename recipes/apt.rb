@@ -20,3 +20,10 @@
 #
 
 include_recipe 'nginx'
+
+directory node['vagrant_repo']['apt']['root_dir'] do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+end

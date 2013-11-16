@@ -18,3 +18,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+default['vagrant_repo']['apt']['root_dir'] = '/usr/local/vagrant-apt'

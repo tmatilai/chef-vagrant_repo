@@ -6,4 +6,5 @@ describe 'vagrant_repo::apt' do
   end
 
   it { should include_recipe('nginx') }
+  it { should create_directory('/usr/local/vagrant-apt') }
 end
