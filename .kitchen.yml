@@ -1,0 +1,17 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: debian-7
+  driver_config:
+    box: debian-7
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+  run_list:
+  - recipe[apt]
+
+suites:
+- name: default
+  run_list:
+  - recipe[vagrant_repo]
