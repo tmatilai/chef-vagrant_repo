@@ -39,3 +39,10 @@ template File.join(node['nginx']['dir'], 'sites-available', 'vagrant-apt') do
 end
 
 nginx_site 'vagrant-apt'
+
+template File.join(node['vagrant_repo']['apt']['root_dir'], 'index.html') do
+  source 'apt.html.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+end

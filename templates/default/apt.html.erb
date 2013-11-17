@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <title>Vagrant - Apt Repository</title>
+
+  <meta name="description" content="Apt repository for Vagrant packages" />
+</head>
+<body>
+<h1>Apt Repository for Vagrant</h1>
+
+<pre>
+# Configure Apt source
+sudo sh -c 'echo "deb http://<%= node['vagrant_repo']['apt']['server_name'] %> stable main" > /etc/apt/sources.list.d/vagrant.list'
+
+# Install Vagrant
+sudo apt-get update
+sudo apt-get install vagrant
+</pre>
+</body>
+</html>
