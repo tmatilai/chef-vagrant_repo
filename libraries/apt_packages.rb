@@ -22,6 +22,15 @@
 class VagrantRepo
   # Collection of AptPackage objects grouped by arch
   class AptPackages
+    # @param [Chef::Node] node
+    # @param [String] arch
+    # @return [String] the arch specific absolute path
+    def self.directory(node, arch)
+      conf = node['vagrant_repo']['apt']
+      File.join(conf['root_dir'], 'dists', conf['suite'],
+                conf['component'], "binary-#{arch}")
+    end
+
     attr_reader :archs, :packages
 
     # Constructs a list of packages based on node data

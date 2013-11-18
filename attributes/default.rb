@@ -23,6 +23,8 @@ default['vagrant_repo']['apt']['root_dir'] = '/usr/local/vagrant-apt'
 
 default['vagrant_repo']['apt']['server_name'] = node['fqdn']
 
+default['vagrant_repo']['apt']['suite']         = 'stable'
+default['vagrant_repo']['apt']['component']     = 'main'
 default['vagrant_repo']['apt']['architectures'] = %w[amd64 i386]
 default['vagrant_repo']['apt']['packages'] = [
   {

@@ -1,0 +1,15 @@
+<% @packages.each do |pkg| -%>
+Package: vagrant
+Version: <%= pkg.version %>
+License: MIT
+Architecture: <%= pkg.arch %>
+Section: default
+Priority: extra
+Homepage: http://www.vagrantup.com/
+Maintainer: HashiCorp <hello@hashicorp.com>
+Filename: pool/<%= pkg.path %>
+Size: <%= pkg.size %>
+MD5sum: <%= pkg.md5 %>
+Description: A tool for building and distributing development environments
+
+<% end -%>
