@@ -22,23 +22,16 @@
 class VagrantRepo
   # Collection of AptPackage objects grouped by arch
   class AptPackages
-    # @param [Chef::Node] node
-    # @param [String] arch
-    # @return [String] the arch specific absolute path
-    def self.directory(node, arch)
-      conf = node['vagrant_repo']['apt']
-      File.join(conf['root_dir'], 'dists', conf['suite'],
-                conf['component'], "binary-#{arch}")
-    end
-
-    attr_reader :archs, :packages
+    attr_reader :config, :packages
 
     # Constructs a list of packages based on node data
-    def initialize(archs, data)
-      @archs = archs
+    #
+    # @param [Chef::Node] node
+    def initialize(node)
+      @config = node['vagrant_repo']['apt']
       @packages = []
 
-      data.each { |release| add_packages(release) }
+      config['packages'].each { |release| add_packages(release) }
     end
 
     # @return [Hash] lists of {AptPackage} objects grouped by arch
@@ -46,10 +39,22 @@ class VagrantRepo
       packages.group_by(&:arch)
     end
 
+    # @return [Array] list of architectures
+    def architectures
+      config['architectures']
+    end
+
+    # @param [String] arch
+    # @return [String] the arch specific absolute path
+    def directory(arch)
+      File.join(config['root_dir'], 'dists', config['suite'],
+                config['component'], "binary-#{arch}")
+    end
+
     private
 
     def add_packages(release_data)
-      archs.each do |arch|
+      architectures.each do |arch|
         packages << package(arch, release_data) if release_data[arch]
       end
     end
