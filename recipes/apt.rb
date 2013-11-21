@@ -23,11 +23,32 @@ node.default['nginx']['default_site_enabled'] = false
 
 include_recipe 'nginx'
 
-directory node['vagrant_repo']['apt']['root_dir'] do
+root_dir = node['vagrant_repo']['apt']['root_dir']
+packages = VagrantRepo::AptPackages.new(node)
+
+directory root_dir do
   owner 'root'
   group 'root'
   mode 00755
   recursive true
+end
+
+packages.architectures.each do |arch|
+  directory packages.directory(arch) do
+    owner 'root'
+    group 'root'
+    mode 00755
+    recursive true
+  end
+end
+
+packages.group_by_arch.each do |arch, pkgs|
+  template File.join(packages.directory(arch), 'Packages') do
+    owner 'root'
+    group 'root'
+    mode 00644
+    variables packages: pkgs
+  end
 end
 
 template File.join(node['nginx']['dir'], 'sites-available', 'vagrant-apt') do
@@ -40,7 +61,7 @@ end
 
 nginx_site 'vagrant-apt'
 
-template File.join(node['vagrant_repo']['apt']['root_dir'], 'index.html') do
+template File.join(root_dir, 'index.html') do
   source 'apt.html.erb'
   owner 'root'
   group 'root'
