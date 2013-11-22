@@ -3,4 +3,5 @@
 /Gemfile.lock
 /.kitchen/
 /.kitchen.local.yml
+/coverage/
 /tmp/
