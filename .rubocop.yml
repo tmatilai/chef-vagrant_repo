@@ -3,3 +3,6 @@ LineLength:
 
 HashSyntax:
   Enabled: false
+
+Encoding:
+  Enabled: false
