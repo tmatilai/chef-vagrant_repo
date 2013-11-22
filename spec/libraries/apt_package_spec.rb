@@ -31,5 +31,9 @@ describe VagrantRepo::AptPackage do
       let(:arch) { 'i386' }
       it { should eq 'gitsha1/vagrant_1.2.7_i686.deb' }
     end
+    context 'with other arch package' do
+      let(:arch) { 'foo' }
+      it { should eq 'gitsha1/vagrant_1.2.7_foo.deb' }
+    end
   end
 end
