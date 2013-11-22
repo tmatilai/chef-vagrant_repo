@@ -1,2 +1,5 @@
 LineLength:
   Max: 100
+
+HashSyntax:
+  Enabled: false

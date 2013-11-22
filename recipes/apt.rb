@@ -47,7 +47,7 @@ packages.group_by_arch.each do |arch, pkgs|
     owner 'root'
     group 'root'
     mode 00644
-    variables packages: pkgs
+    variables :packages => pkgs
   end
 end
 
