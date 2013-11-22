@@ -5,4 +5,6 @@ server {
 	access_log  <%= node['nginx']['log_dir'] %>/vagrant-apt.access.log;
 	error_log   <%= node['nginx']['log_dir'] %>/vagrant-apt.error.log;
 	root        <%= node['vagrant_repo']['apt']['root_dir'] %>;
+
+	rewrite ^/pool/(.+)$ <%= node['vagrant_repo']['download_uri'] %>/$1 redirect;
 }

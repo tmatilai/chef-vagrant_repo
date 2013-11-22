@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+default['vagrant_repo']['download_uri'] = 'http://files.vagrantup.com/packages'
+
 default['vagrant_repo']['apt']['root_dir'] = '/usr/local/vagrant-apt'
 
 default['vagrant_repo']['apt']['server_name'] = node['fqdn']
