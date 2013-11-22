@@ -1,0 +1,17 @@
+Origin: Vagrant
+Label: Vagrant
+Codename: <%= node['vagrant_repo']['apt']['suite'] %>
+Architectures: <%= node['vagrant_repo']['apt']['architectures'].join(' ') %>
+Components: <%= node['vagrant_repo']['apt']['component'] %>
+MD5Sum:
+<% @files.each do |f| -%>
+ <%= f.md5 %> <%= f.size %> <%= f.relative_path(@base_dir) %>
+<% end -%>
+SHA1:
+<% @files.each do |f ,p| -%>
+ <%= f.sha1 %> <%= f.size %> <%= f.relative_path(@base_dir) %>
+<% end -%>
+SHA256:
+<% @files.each do |f, p| -%>
+ <%= f.sha256 %> <%= f.size %> <%= f.relative_path(@base_dir) %>
+<% end -%>
