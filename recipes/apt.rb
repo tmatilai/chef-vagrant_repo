@@ -24,9 +24,11 @@ node.default['nginx']['default_site_enabled'] = false
 include_recipe 'nginx'
 
 root_dir = node['vagrant_repo']['apt']['root_dir']
+suite_dir = File.join(root_dir, 'dists', node['vagrant_repo']['apt']['suite'])
+
 packages = VagrantRepo::AptPackages.new(node)
 
-directory root_dir do
+directory suite_dir do
   owner 'root'
   group 'root'
   mode 00755
@@ -42,13 +44,25 @@ packages.architectures.each do |arch|
   end
 end
 
+pkg_indices = []
 packages.group_by_arch.each do |arch, pkgs|
-  template File.join(packages.directory(arch), 'Packages') do
+  r = template File.join(packages.directory(arch), 'Packages') do
     owner 'root'
     group 'root'
     mode 00644
     variables :packages => pkgs
   end
+  pkg_indices << VagrantRepo::Hashfile.new(r.path)
+end
+
+template File.join(suite_dir, 'Release') do
+  owner 'root'
+  group 'root'
+  mode 00644
+  variables(
+    :base_dir => suite_dir,
+    :files => pkg_indices
+  )
 end
 
 template File.join(node['nginx']['dir'], 'sites-available', 'vagrant-apt') do
